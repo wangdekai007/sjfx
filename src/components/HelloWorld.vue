@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import data from "./2018.json";
+console.log("data", data);
+
 /**
  * 需求：
  * 1.计算出不同打法每一期中不中
