@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import HelloWorld from "./components/HelloWorld.vue";
+import PageA from "./components/PageA.vue";
+import PageB from "./components/PageB.vue";
 </script>
 
 <template>
-	<HelloWorld />
+	<PageA />
+	<PageB />
 </template>
 
 <style>

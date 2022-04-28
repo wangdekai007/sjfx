@@ -1,13 +1,30 @@
 <script setup lang="ts">
-import data from "./2018.json";
-console.log("data", data);
-
 /**
  * 需求：
  * 1.计算出不同打法每一期中不中
  * 2.计算出当期的盈亏
  * 3.计算总的盈亏
  */
+import { ref } from "vue";
+import data2018 from "./2021.json";
+import 组合0258 from "./组合0258.json";
+const li: any = data2018.map((item) => {
+	const index = 组合0258.indexOf(item.kai);
+	(item as any).zuhe0258 = index != -1 ? true : false;
+	return item;
+});
+let sum = 0;
+li.forEach((item: any) => {
+	if (item.zuhe0258) {
+		sum += 1200;
+	} else {
+		sum -= 8700;
+	}
+});
+ref(sum);
+console.log("li", li);
+console.log("sum", sum);
+const list: any = ref(li);
 </script>
 
 <template>
@@ -25,25 +42,28 @@ console.log("data", data);
 					<th>3数0258大奖</th>
 				</tr>
 			</thead>
+
 			<tbody>
-				<tr>
-					<td>1</td>
-					<td>1234</td>
-					<td>中</td>
-					<td class="red">不中</td>
-					<td>中</td>
-					<td>中</td>
-					<td>中</td>
+				<tr v-for="(item, index) in list">
+					<td>{{ index + 1 }}</td>
+					<td>{{ item.kai }}</td>
+					<td>...</td>
+					<td>...</td>
+					<td>...</td>
+					<td>...</td>
+					<td :class="item.zuhe0258 ? '' : 'red'">
+						{{ item.zuhe0258 ? "中" : "不中" }}
+					</td>
 				</tr>
 
 				<tr>
 					<td>总计</td>
-					<td>----</td>
-					<td>9999</td>
-					<td class="red">-10000</td>
-					<td>9999</td>
-					<td>6666</td>
-					<td>1111</td>
+					<td>...</td>
+					<td>...</td>
+					<td>...</td>
+					<td>...</td>
+					<td>...</td>
+					<td>{{ sum }}</td>
 				</tr>
 			</tbody>
 		</table>
