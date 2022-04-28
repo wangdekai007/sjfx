@@ -8,6 +8,7 @@ import PageE from "./components/PageE.vue";
 
 <template>
 	<PageA />
+	<div class="mt50"></div>
 	<PageB />
 	<PageC />
 	<PageD />
@@ -22,5 +23,8 @@ import PageE from "./components/PageE.vue";
 }
 ul li {
 	list-style: none;
+}
+.mt50 {
+	margin-top: 50px;
 }
 </style>
