@@ -52,7 +52,7 @@ const list: any = ref(li);
 					<td>...</td>
 					<td>...</td>
 					<td :class="item.zuhe0258 ? '' : 'red'">
-						{{ item.zuhe0258 ? "中" : "不中" }}
+						{{ item.zuhe0258 ? "+1200" : "-8700" }}
 					</td>
 				</tr>
 
