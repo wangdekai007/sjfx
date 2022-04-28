@@ -1,17 +1,19 @@
 <script setup lang="ts">
+import { defineComponent, ref } from "vue";
+import type { TableColumnsType } from "ant-design-vue";
+
+import data2018 from "./2018.json";
+import 组合360 from "./组合360.json";
+import 组合0258 from "./组合0258.json";
+import 组合7777 from "./组合7777.json";
 /**
  * 需求：
  * 1.计算出不同打法每一期中不中
  * 2.计算出当期的盈亏
  * 3.计算总的盈亏
  */
-import { ref } from "vue";
-import data2018 from "./2018.json";
-import 组合360 from "./组合360.json";
-import 组合0258 from "./组合0258.json";
-import 组合7777 from "./组合7777.json";
 
-const li: any = data2018.map((item) => {
+const li: any = data2018.map((item, i) => {
 	const index = 组合0258.indexOf(item.kai);
 	const index2 = 组合7777.indexOf(item.kai);
 	(item as any).zuhe0258 = index != -1 ? true : false;
@@ -34,6 +36,7 @@ const li: any = data2018.map((item) => {
 		}
 	});
 	(item as any).zuhe360 = index3_count;
+	(item as any).index = i + 1;
 	return item;
 });
 let sum360 = 0;
@@ -67,14 +70,82 @@ ref(sum0258);
 ref(sum7777);
 console.log("li", li);
 const list: any = ref(li);
-</script>
 
+const columns = ref<TableColumnsType>([
+	{
+		title: "期号",
+		width: 20,
+		dataIndex: "index",
+		key: "index",
+		fixed: "left",
+	},
+	{
+		title: "开奖号码",
+		width: 50,
+		dataIndex: "kai",
+		key: "1",
+		fixed: "left",
+	},
+	{
+		title: "三定360组",
+		dataIndex: "zuhe360",
+		key: "2",
+		width: 50,
+		customRender: ({ text, record, index }) => {
+			if (text == 0) {
+				return "-360";
+			} else if (text == 1) {
+				return "+620";
+			} else if (text == 2) {
+				return "+1240";
+			} else if (text == 3) {
+				return "+1860";
+			}
+			return text;
+		},
+	},
+	{
+		title: "0258组合",
+		dataIndex: "zuhe0258",
+		key: "4",
+		width: 50,
+		customRender: ({ text, record, index }) => {
+			return text ? "+1200" : "-8700";
+		},
+	},
+	{
+		title: "7777组合",
+		dataIndex: "zuhe7777",
+		key: "3",
+		width: 50,
+		customRender: ({ text, record, index }) => {
+			return text ? "+7499" : "-2401";
+		},
+	},
+]);
+
+// ref(tableData);
+const fixedTop = ref(false);
+</script>
 <template>
+	<div class="w">
+		<a-table
+			sticky
+			:columns="columns"
+			:data-source="li"
+			:scroll="{ x: 1500 }"
+			:pagination="false"
+		>
+			<template #bodyCell="{ column }">
+				<template v-if="column.key === 'operation'"><a>action</a></template>
+			</template>
+		</a-table>
+	</div>
 	<div class="w">
 		<div class="title">2018年</div>
 		<table>
 			<thead>
-				<tr>
+				<tr class="title_tr">
 					<th>排序</th>
 					<th>号码</th>
 					<th>360组三定</th>
@@ -126,16 +197,33 @@ const list: any = ref(li);
 	text-align: center;
 }
 table {
+	position: relative;
 	width: 100%;
 	text-align: center;
 	border-collapse: collapse;
 	border: 1px solid #ccc;
-
+	overflow: hidden;
+	.title_tr {
+		top: 0;
+		background-color: #fff;
+	}
 	tr {
 		th,
 		td {
 			padding: 5px;
 			border: 1px solid #ccc;
+		}
+		td:nth-child(2) {
+			width: 20%;
+		}
+		td:nth-child(3) {
+			width: 20%;
+		}
+		td:nth-child(4) {
+			width: 20%;
+		}
+		td:nth-child(5) {
+			width: 20%;
 		}
 	}
 	.red {

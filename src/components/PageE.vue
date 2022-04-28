@@ -130,7 +130,6 @@ table {
 	text-align: center;
 	border-collapse: collapse;
 	border: 1px solid #ccc;
-
 	tr {
 		th,
 		td {
