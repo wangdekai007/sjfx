@@ -1,11 +1,17 @@
 <script setup lang="ts">
 import PageA from "./components/PageA.vue";
 import PageB from "./components/PageB.vue";
+import PageC from "./components/PageC.vue";
+import PageD from "./components/PageD.vue";
+import PageE from "./components/PageE.vue";
 </script>
 
 <template>
 	<PageA />
 	<PageB />
+	<PageC />
+	<PageD />
+	<PageE />
 </template>
 
 <style>
